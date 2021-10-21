@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<suite name="groupsTest">
+    <test name="testname">
+        <!--分组测试配置，使用该文件驱动执行测试-->
+        <groups>
+            <run>
+                <!--包含组，执行-->
+                <include name="server"/>
+                <!--排除组，不执行-->
+                <exclude name="server"/>
+            </run>
+        </groups>
+
+        <classes>
+            <class name="com.testNg.groupTest"/>
+        </classes>
+    </test>
+</suite>
