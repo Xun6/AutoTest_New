@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<suite name="testsuit">
+    <test name="test">
+        <!--配置测试套件 和 测试用例方法-->
+        <classes>
+            <class name="com.testNg.TestSuite.suiteConfig"/>
+            <class name="com.testNg.TestSuite.LoginTest"/>
+        </classes>
+    </test>
+</suite>
