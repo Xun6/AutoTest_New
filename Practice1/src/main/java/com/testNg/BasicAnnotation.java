@@ -14,6 +14,11 @@ public class BasicAnnotation {
         System.out.println("这是测试用例 1");
     }
 
+    @Test(enabled = false)
+    public void ignoreTest(){
+        System.out.println("这是一个忽略测试方法，不执行！");
+    }
+
     @BeforeMethod
     public void beforemethod(){
         System.out.println("这是在测试方法之前运行的");
