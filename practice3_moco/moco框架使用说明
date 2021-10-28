@@ -1,0 +1,13 @@
+1、导入moco的jar包
+2、运行测试命令：
+    java -jar ./moco-runner-0.11.0-standalone.jar http -p 8888 -c demo.json
+
+    ./moco-runner-0.11.0-standalone.jar : jar包的相对/绝对地址
+
+    http ： 通讯协议
+
+    -p : 指定开放的监听端口号
+
+    -c : 指定需要之行的 .json 文件（绝对或相对地址）
+
+3、支持热启动

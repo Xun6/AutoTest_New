@@ -1,0 +1,127 @@
+[
+  {
+    "description":"这是一个moco出来的接口demo",
+    "request": {
+      "uri": "/demo"
+    },
+    "response": {
+      "headers": {
+        "Content-Type": "text/html;charset=gbk"
+      },
+      "text": "恭喜你访问成功！！！"
+    }
+  },
+
+  {
+    "description": "这是一个get方法的请求",
+    "request": {
+      "uri": "/getUser",
+      "method": "get"
+    },
+    "response": {
+      "headers": {
+        "Content-Type": "text/html;charset=gbk"
+      },
+      "text": "恭喜你，访问成功了！这是一个get请求"
+    }
+  },
+
+  {
+    "description": "这是一个get方法的请求,带参数",
+    "request": {
+      "uri": "/getUserName",
+      "method": "get",
+      "queries": {
+        "name": "zhangsan",
+        "age": "23"
+      }
+    },
+    "response": {
+      "headers": {
+        "Content-Type": "text/html;charset=gbk"
+      },
+      "text": "恭喜你，访问成功了！这是一个get请求,带参数的"
+    }
+  },
+
+  {
+    "description": "模拟一个带参数的 post 请求 ",
+    "request": {
+      "uri": "/postDemo",
+      "method": "post",
+      "forms": {
+        "name": "张三",
+        "age": "23"
+      }
+    },
+    "response": {
+      "headers": {
+        "Content-Type": "text/html;charset=gbk"
+      },
+      "text": "恭喜你，访问成功了！这是一个 post 请求，带参数的"
+    }
+  },
+
+  {
+    "description": "这是一个需要携带cookies信息的 get方法请求",
+    "request": {
+      "uri": "/getUserWithCookie",
+      "method": "get",
+      "cookies": {
+        "login": "true"
+      }
+    },
+    "response": {
+      "headers": {
+        "Content-Type": "text/html;charset=gbk"
+      },
+      "text": "恭喜你，访问成功了！这是携带cookies信息的 get请求"
+    }
+  },
+
+  {
+    "description": "这是一个需要携带cookies信息的 post方法请求",
+    "request": {
+      "uri": "/post/With/Cookie",
+      "method": "post",
+      "cookies": {
+        "login": "true"
+      },
+      "json": {
+        "name": "huhansan",
+        "age": "24"
+      }
+    },
+    "response": {
+      "headers": {
+        "Content-Type": "text/html;charset=gbk"
+      },
+      "status": 200,
+      "json": {
+        "data": "success",
+        "status": "1"
+      }
+    }
+  },
+
+  {
+    "description": "这是一个模拟重定向的的请求结构",
+    "request": {
+      "uri": "/redirectTo"
+    },
+    "redirectTo": "/redirectToHere"
+  },
+
+  {
+    "description": "被重定向到这里",
+    "request": {
+      "uri": "/redirectToHere"
+    },
+    "response": {
+      "headers": {
+        "Content-Type": "text/html;charset=gbk"
+      },
+      "text": "恭喜你，重定向成功了！！！"
+    }
+  }
+]
