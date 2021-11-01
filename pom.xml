@@ -13,5 +13,6 @@
     <modules>
         <module>Practice1</module>
         <module>Practice2</module>
+        <module>Practice4_httpclient</module>
     </modules>
 </project>
