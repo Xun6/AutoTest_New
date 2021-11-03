@@ -1,5 +1,22 @@
 [
   {
+    "description": "模拟一个会返回cookies信息的请求",
+    "request": {
+      "uri": "/getCookies",
+      "method": "get"
+    },
+    "response": {
+      "headers": {
+        "Content-Type": "text/html;charset=gbk"
+      },
+      "cookies": {
+        "login": "true"
+      },
+      "text": "恭喜你，cookies信息获取成功了！！！"
+    }
+  },
+
+  {
     "description":"这是一个moco出来的接口demo",
     "request": {
       "uri": "/demo"
