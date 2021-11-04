@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--配置测试套件，添加我的测试用例-->
+<suite name="这是我的测试套件">
+    <test name="这是我的测试用例">
+        <classes>
+            <class name="com.ExtentReport.extentReportAppMain">
+                <methods>
+                    <include name="test1"/>
+                    <include name="test2"/>
+                    <include name="test3"/>
+                    <include name="myLog"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!--添加监听器，运行后可生成测试报告文件-->
+    <listeners>
+        <!--监听依赖库本身的类-->
+        <!--        <listener class-name="com.vimalselvam.testng.listener.ExtentTestNgFormatter"/>-->
+
+        <!--监听自己重构的监听类,可以生成漂亮的测试报告-->
+        <listener class-name="com.ExtentReport.ExtentTestNGIReporterListener"/>
+    </listeners>
+</suite>
