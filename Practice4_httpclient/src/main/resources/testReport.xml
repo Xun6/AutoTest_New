@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!--用于生成测试报告-->
+<suite name="套件">
+    <test name="test">
+        <classes>
+            <class name="com.httpclient.httpClientWithCookies_post">
+                <methods>
+                    <include name="beforMethod"/>
+                    <include name="gettest"/>
+                    <include name="postwithCookie"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <listeners>
+        <!--监听依赖库本身的类-->
+        <!--        <listener class-name="com.vimalselvam.testng.listener.ExtentTestNgFormatter"/>-->
+
+        <!--监听自己重构的监听类,可以生成漂亮的测试报告-->
+        <listener class-name="com.httpclient.ExtentTestNGIReporterListener"/>
+    </listeners>
+</suite>
