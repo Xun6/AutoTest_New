@@ -4,24 +4,70 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>org.example</groupId>
-    <artifactId>Practice5_springBoot</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <parent>
+        <artifactId>Practice</artifactId>
+        <groupId>com.xiaoyu.autoTest</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
-<!--    添加springboot依赖-->
+
+    <artifactId>Practice5_springBoot</artifactId>
+
+<!--    maven插件指定java8构建环境-->
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>8</source>
+                    <target>8</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <!--maven依赖，选择使用阿里云代理仓库源-->
+    <repositories>
+        <repository>
+            <id>maven-ali</id>
+            <url>http://maven.aliyun.com/nexus/content/repositories/central</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+                <updatePolicy>always</updatePolicy>
+                <checksumPolicy>fail</checksumPolicy>
+            </snapshots>
+        </repository>
+    </repositories>
+
+<!--    提取相同属性，做全局设置-->
+    <properties>
+            <swagger.version>2.9.2</swagger.version>
+    </properties>
+
+
     <dependencies>
+        <!--    添加springboot依赖-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
-            <version>2.5.6</version>
         </dependency>
+
+<!--        添加swaggerUi依赖-->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger.version}</version>
+        </dependency>
+
     </dependencies>
-
-
-
-<!--    <properties>-->
-<!--        <maven.compiler.source>11</maven.compiler.source>-->
-<!--        <maven.compiler.target>11</maven.compiler.target>-->
-<!--    </properties>-->
 
 </project>

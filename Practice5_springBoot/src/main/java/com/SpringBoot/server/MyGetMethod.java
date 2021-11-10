@@ -1,7 +1,9 @@
-package com.SpringBoot;
+package com.SpringBoot.server;
 
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -10,9 +12,10 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * 这是一个演示示例，模拟的get请求接口
+ * 这是一个演示示例，模拟的get请求接口 (并且配置了swagger注解，用于生成可访问的接口文档
  */
 @RestController
+@Api(value = "/")   //将类标记为Swagger资源。
 public class MyGetMethod {
 
     /**
@@ -20,6 +23,7 @@ public class MyGetMethod {
      * @param response
      * @return
      */
+    @ApiOperation(value = "获取cookies的get方法",httpMethod = "GET")
     @RequestMapping(value = "/getCookies",method = RequestMethod.GET)  //设置访问路径,请求方法
     public String getmethod(HttpServletResponse response){
 
@@ -34,6 +38,7 @@ public class MyGetMethod {
      * 演示携带cookies信息访问的get请求
      * @return
      */
+    @ApiOperation(value = "携带cookies信息，访问get请求",httpMethod = "GET")
     @RequestMapping(value = "/get/with/cookie",method = RequestMethod.GET)  //设置访问路径,请求方法
     public String getWithCookie(HttpServletRequest request){
         Cookie[] cookies= request.getCookies(); //获取cookies请求参数
@@ -57,6 +62,7 @@ public class MyGetMethod {
      * @param end
      * @return
      */
+    @ApiOperation(value = "携带参数，访问get请求,方法一",httpMethod = "GET")
     @RequestMapping(value = "/getWithParams",method = RequestMethod.GET) //设置访问路径,请求方法
     public Map<String,Integer> getList(@RequestParam Integer start,
                                        @RequestParam Integer end){
@@ -77,6 +83,7 @@ public class MyGetMethod {
      * @param end
      * @return
      */
+    @ApiOperation(value = "携带参数，访问get请求,方法二",httpMethod = "GET")
     @RequestMapping(value = "/getWithParams/{start}/{end}") //设置访问路径,请求方法
     public Map<String,Integer> getList_two(@PathVariable Integer start,
                                        @PathVariable Integer end){
