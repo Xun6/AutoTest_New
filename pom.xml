@@ -23,5 +23,6 @@
         <module>Practice2</module>
         <module>Practice4_httpclient</module>
         <module>Practice5_springBoot</module>
+        <module>Practice6_MyBatis</module>
     </modules>
 </project>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.mybatis">
+<!--  查询用户列表  利用id被调用，resultType表示执行语句返回结果类型-->
+    <select id="getUserCount" resultType="Integer">
+        select count(*) from User;
+    </select>
+
+<!--  添加用户信息  利用id被调用，parameterType表示执行语句插入的参数类型模板-->
+    <select id="addUser" parameterType="com.mybatis.mysql_CRUD.UserForm">
+        insert into User(id,name,age,sex) values(#{id},#{name},#{age},#{sex});
+    </select>
+
+<!--  更新用户信息  利用id被调用，parameterType表示执行语句传入的参数类型模板-->
+    <select id="updateUser" parameterType="com.mybatis.mysql_CRUD.UserForm">
+        update User set name=#{name},age=#{age} where id=#{id};
+    </select>
+
+<!--  删除用户  利用id被调用，parameterType表示执行语句传入的参数类型-->
+    <select id="deleteUser" parameterType="Integer">
+        delete from User where id=#{id};
+    </select>
+</mapper>

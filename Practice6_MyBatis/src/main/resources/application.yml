@@ -1,0 +1,20 @@
+server:
+  port: 8888
+
+logging:
+  path: logs
+  file: mylog.log
+
+spring:
+  application:
+    name: myTest
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://172.18.31.58:3306/xiaoyu_test
+    username: root
+    password: root
+
+mybatis:
+  type-aliases-package: com.mybatis
+  mapper-locations:
+    - mapper/*
