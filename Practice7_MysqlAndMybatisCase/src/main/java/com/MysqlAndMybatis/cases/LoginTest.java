@@ -44,9 +44,11 @@ public class LoginTest {
         // 请求接口
         String res = getResult(loginIm);
         Thread.sleep(2000);
+        System.out.println(loginIm.getExpected());
+        System.out.println(res);
 
         // 验证结果,判断实际结果是否符合期望值 (思路是：数据库中的查询的这条数据与调用这条接口返回的数据结果是否相匹配)
-        Assert.assertEquals(loginIm.getExpected(),res);
+        Assert.assertEquals(loginIm.getExpected(),res,"实际值与期望不符！");
     }
 
     @Test(description = "登录失败接口测试")
@@ -65,7 +67,9 @@ public class LoginTest {
     }
 
     /**
-     * http请求逻辑 (思路是：数据库中查询一条数据与用该数据做参数对象调用接口返回的结果内容是否相匹配)
+     * http请求逻辑 (思路是：数据库中主动查询一条数据与用该数据做参数对象调用接口查询数据库
+     * (例如：在登录表中查询一条用户，用此用户调用登录接口
+     * 是否能正常登录，测试用户表中是否有次用户))
      * @param loginIm 对象参数
      * @return  返回接口请求结果
      */

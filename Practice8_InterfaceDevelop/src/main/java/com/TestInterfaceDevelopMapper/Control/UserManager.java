@@ -37,12 +37,14 @@ public class UserManager {
         int i = template.selectOne("login",user); // 传参执行指定sql语句
         Cookie cookie = new Cookie("login","true"); //创建一个指定的cookies信息
         response.addCookie(cookie);  // 将cookies信息作为响应数据返回
-        log.info("登录结果是：" + i);
         // 判断查到数据，返回登录成功
         if(i==1){
+            log.info("登录结果是：" + i + "， 登录成功！");
             return true;
+        } else{
+            log.info("登录失败！");
+            return false;
         }
-        return false;
     }
 
 
@@ -56,7 +58,7 @@ public class UserManager {
             i = template.insert("addUser",user); // 执行sql语句
         }
         if(i > 0){
-            log.info("添加用户数量是：" + i);
+            log.info("添加用户数量是：" + i + "添加成功！！");
             return true;
         }
         return false;
@@ -87,7 +89,7 @@ public class UserManager {
         if (b){
             i = template.update("updateUserInfo",user);
         }
-        log.info("更新的条目数是：" + i);
+        log.info("更新的条目数是：" + i + "更新成功！");
         return i;
     }
 

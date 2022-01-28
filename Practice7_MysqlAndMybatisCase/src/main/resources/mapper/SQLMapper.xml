@@ -37,7 +37,7 @@
     <!--如下是调用接口查询的sql-->
     <!--添加用户接口-->
     <select id="addUser" parameterType="com.MysqlAndMybatis.models.AddUserIm" resultType="com.MysqlAndMybatis.models.UserIm">
-        select * from user where
+        select * from usercase where
         userName=#{userName}
         and password=#{password}
         and sex=#{sex}
@@ -49,14 +49,14 @@
     <!--获取用户信息-->
     <select id="getUserInfo" parameterType="com.MysqlAndMybatis.models.GetUserInfoIm" resultType="com.MysqlAndMybatis.models.UserIm">
         <!-- SQL语句 -->
-        select * from user where
-        id=#{userId};
+        select * from usercase where
+        id=#{id};
     </select>
 
     <!--获取用户列表-->
     <select id="getUserList" parameterType="com.MysqlAndMybatis.models.GetUserInfoListIm" resultType="com.MysqlAndMybatis.models.UserIm">
         <!-- SQL语句 -->
-        select * from user
+        select * from usercase
         <trim prefix="WHERE" prefixOverrides="and">
             <if test="null != userName and '' !=userName">
                 AND userName=#{userName}
@@ -73,7 +73,7 @@
 
     <!--获取更新后的数据-->
     <select id="getUpdateUserInfo" parameterType="com.MysqlAndMybatis.models.UpdateUserInfoIm" resultType="com.MysqlAndMybatis.models.UserIm">
-        select * from user
+        select * from usercase
         <trim prefix="WHERE" prefixOverrides="and">
             <if test="null != userName and '' !=userName">
                 AND userName=#{userName}
@@ -91,7 +91,6 @@
                 AND isDelete=#{isDelete}
             </if>
         </trim>
-        And id = #{userId};
+        And id = #{id};
     </select>
-
 </mapper>
