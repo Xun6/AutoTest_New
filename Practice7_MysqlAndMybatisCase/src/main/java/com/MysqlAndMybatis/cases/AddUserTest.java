@@ -4,6 +4,7 @@ import com.MysqlAndMybatis.config.TestUrlConfig;
 import com.MysqlAndMybatis.models.AddUserIm;
 import com.MysqlAndMybatis.models.UserIm;
 import com.MysqlAndMybatis.utils.DatabaseUtil;
+import com.sun.xml.internal.bind.v2.TODO;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -14,6 +15,7 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
+import java.util.List;
 
 //添加用户接口测试
 public class AddUserTest {
@@ -28,11 +30,14 @@ public class AddUserTest {
 
         // 请求接口获取结果
         String result = getResult(addUserIm);
-        Thread.sleep(10000); //确保请求结束
+        Thread.sleep(3000); //确保请求结束
 
         // 主动执行sql语句
-        UserIm userIm = session.selectOne("addUser",addUserIm); // 执行另一条sql，检查用户是否存在
-        System.out.println(userIm.toString()); //打印结果
+        // TODO 使用session.selectOne()这条语句为什么总是报空指针异常？？？  获取不到查询对象？？？？
+
+//        UserIm userIm = session.selectOne("addUser",addUserIm);
+        List<UserIm> list = session.selectList("addUser",addUserIm); // 执行另一条sql，检查用户是否存在
+        System.out.println(list.toString());
 
         // 验证结果 判断实际结果与预期是否一致
         Assert.assertEquals(addUserIm.getExpected(),result);

@@ -34,7 +34,11 @@ public class UserManager {
     @ApiOperation(value = "登录接口",httpMethod = "POST")
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public Boolean login(HttpServletResponse response, @RequestBody User user) throws InterruptedException {
-        int i = template.selectOne("login",user); // 传参执行指定sql语句
+        int i = 0;
+        // 判断必须满足密码正确才能执行查询语句
+        if(user.getPassword().equals("123456")){
+            i = template.selectOne("login",user); // 传参执行指定sql语句
+        }
         Cookie cookie = new Cookie("login","true"); //创建一个指定的cookies信息
         response.addCookie(cookie);  // 将cookies信息作为响应数据返回
         // 判断查到数据，返回登录成功
@@ -65,18 +69,35 @@ public class UserManager {
     }
 
 
-    // 获取用户列表信息
-    @ApiOperation(value = "获取用户列表信息接口",httpMethod = "POST")
+    // 获取用户信息
+    @ApiOperation(value = "获取用户信息接口",httpMethod = "POST")
     @RequestMapping(value = "/getUserInfo",method = RequestMethod.POST)
     public List<User> getUserInfo(HttpServletRequest request,@RequestBody User user){
         Boolean b = verifyCookies(request); // 验证cookies信息
         if(b){
-            List<User> userList = template.selectList("getUserInfo",user);
+            List<User> userList = template.selectList("getUserListInfo",user);
             log.info("获取的用户数量是：" + userList.size());
             return userList;
         }else {
+            log.info("cookies验证不通过！");
             return null;
         }
+    }
+
+
+    //获取用户列表信息
+    @ApiOperation(value = "获取用户列表信息接口",httpMethod = "POST")
+    @RequestMapping(value = "/getUserList",method = RequestMethod.POST)
+    public List getUserList(HttpServletRequest request,@RequestBody User user){
+        Boolean b = verifyCookies(request);
+        if(b){
+            List<User> sqlList = template.selectList("getUserListInfo",user);
+            log.info("获取的列表数量是：" + sqlList.size());
+            return sqlList;
+        }else {
+            log.info("cookies验证失败！");
+        }
+        return null;
     }
 
 

@@ -62,9 +62,9 @@ public class GetUserInfoListTest {
         param.put("sex",getUserInfoListIm.getSex());
         param.put("age",getUserInfoListIm.getAge());
 
-        post.setHeader("content-Type","application.json");
+        post.setHeader("content-Type","application/json");
 
-        StringEntity entity = new StringEntity(param.toString());
+        StringEntity entity = new StringEntity(param.toString(),"utf-8");
         post.setEntity(entity);
 
         TestUrlConfig.defaultHttpClient.setCookieStore(TestUrlConfig.store);

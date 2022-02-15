@@ -16,11 +16,11 @@ public class UserIm {
     @Override
     public String toString(){
         return ("{ id: " + id + ","+
-                "id: " + userName + ","+
-                "id: " + password + ","+
-                "id: " + age + ","+
-                "id: " + sex + ","+
-                "id: " + permission + ","+
-                "id: " + isDelete + " }");
+                "userName: " + userName + ","+
+                "password: " + password + ","+
+                "age: " + age + ","+
+                "sex: " + sex + ","+
+                "permission: " + permission + ","+
+                "isDelete: " + isDelete + " }");
     }
 }

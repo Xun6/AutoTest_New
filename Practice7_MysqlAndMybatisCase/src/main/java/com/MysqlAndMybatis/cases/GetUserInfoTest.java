@@ -42,11 +42,11 @@ public class GetUserInfoTest {
 //        list.add(userIm);
 //        JSONArray objects = new JSONArray(list);
         //============
-        System.out.println("自己获取的用户信息：" + array.toString());
-        System.out.println("调用接口获取的用户信息：" + resultJson.toString());
+        System.out.println("自己获取的用户信息：" + array);
+        System.out.println("调用接口获取的用户信息：" + resultJson);
 
         // 验证结果
-        Assert.assertEquals(array,resultJson);
+        Assert.assertEquals(array.toString(),resultJson.toString());
     }
 
     // http请求逻辑
@@ -61,9 +61,9 @@ public class GetUserInfoTest {
         TestUrlConfig.defaultHttpClient.setCookieStore(TestUrlConfig.store); // 设置cookies信息
         HttpResponse response = TestUrlConfig.defaultHttpClient.execute(post);
         result = EntityUtils.toString(response.getEntity(),"utf-8");
-        List resultList = Arrays.asList(result);
+//        List resultList = Arrays.asList(result);
         // Construct a JSONArray from a Collection.
-        JSONArray jsonArray = new JSONArray(resultList);
+        JSONArray jsonArray = new JSONArray(result);
         return jsonArray;
     }
 }

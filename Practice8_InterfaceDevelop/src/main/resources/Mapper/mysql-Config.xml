@@ -17,7 +17,7 @@
     </insert>
 
     <!--获取用户列表信息接口 sql语句-->
-    <select id="getUserInfo" parameterType="com.TestInterfaceDevelopMapper.model.User" resultType="com.TestInterfaceDevelopMapper.model.User">
+    <select id="getUserListInfo" parameterType="com.TestInterfaceDevelopMapper.model.User" resultType="com.TestInterfaceDevelopMapper.model.User">
         select * from usercase
         <trim prefix="WHERE" prefixOverrides="and">
             <if test="null != id and '' !=id">

@@ -31,25 +31,14 @@ public class UpdateUserInfoTest {
 
         // 主动执行sql
         UserIm userIm = session.selectOne("getUpdateUserInfo",updateUserInfoIm); // 自己查询库活的的数据
+        System.out.println(userIm.toString()); //打印查询结果
 
         // 验证结果
-        Assert.assertEquals(userIm,result);
-        //============按照教程上的方法
-        // 请求接口获取结果
-//        int resultTest = Integer.parseInt(result);
-//        Thread.sleep(2000);
-//
-        // 主动执行sql
-//        UserIm userImtest = session.selectOne(updateUserInfoIm.getExpected(),updateUserInfoIm);
-//        System.out.println(userImtest.toString());
-//
-        // 验证结果
-//        Assert.assertNotNull(userImtest);
-//        Assert.assertNotNull(resultTest);
-        //==========================
+        Assert.assertNotNull(result);
+        Assert.assertNotNull(userIm);
     }
 
-    @Test(dependsOnGroups = "loginTrue",description = "删除用户")
+    @Test(dependsOnGroups = "loginTrue",description = "删除用户(假删除)")
     public void deleteUser() throws IOException, InterruptedException {
         SqlSession session = DatabaseUtil.getSqlsession();
         UpdateUserInfoIm updateUserInfoIm = session.selectOne("updateUserInfoCase",2); // 执行sql查询第一条数据
@@ -58,7 +47,7 @@ public class UpdateUserInfoTest {
 
         // 验证结果
         String result = getResult(updateUserInfoIm);
-        int resultTest = Integer.parseInt(result);
+        int resultTest = Integer.parseInt(result); // 因为调用接口返回的数据是int类型，在这里做一次类型转换，不转貌似也没多大关系
         Thread.sleep(2000);
 
         UserIm userImtest = session.selectOne(updateUserInfoIm.getExpected(),updateUserInfoIm);

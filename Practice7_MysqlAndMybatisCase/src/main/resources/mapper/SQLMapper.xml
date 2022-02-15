@@ -41,9 +41,7 @@
         userName=#{userName}
         and password=#{password}
         and sex=#{sex}
-        and age=#{age}
-        and permission=#{permission}
-        and isDelete=#{isDelete};
+        and age=#{age};
     </select>
 
     <!--获取用户信息-->
