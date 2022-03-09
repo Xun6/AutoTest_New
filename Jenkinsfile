@@ -25,5 +25,15 @@ pipeline{
                 		'''
 			}
 		}
+		stage('Test'){
+			steps{
+				sh '''
+				  source /etc/profile
+				  pwd
+				  cd Practice7_MysqlAndMybatisCase
+				  mvn clean package
+				'''
+			}
+		}
 	}
 }
