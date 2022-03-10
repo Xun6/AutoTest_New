@@ -4,7 +4,6 @@ import com.MysqlAndMybatis.config.TestUrlConfig;
 import com.MysqlAndMybatis.models.AddUserIm;
 import com.MysqlAndMybatis.models.UserIm;
 import com.MysqlAndMybatis.utils.DatabaseUtil;
-import com.sun.xml.internal.bind.v2.TODO;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
