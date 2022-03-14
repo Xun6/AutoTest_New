@@ -40,10 +40,11 @@ pipeline{
 		stage('Generate-Report'){
 			steps{
 				sh '''
+					source /etc/profile
 					result=$(curl -s http://172.18.31.58:8081/job/deploy-pipeline/lastBuild/buildNumber --user root:root)
 					pwd
-					mkdir /home/$result
-					cp /var/lib/docker/volumes/jenkins-data/_data/workspace/deploy-pipeline/Practice7_MysqlAndMybatisCase/test-output/index.html /home/$result/index.html
+					mkdir /home/myReport/$result
+					cp /var/jenkins_home/workspace/deploy-pipeline/Practice7_MysqlAndMybatisCase/test-output/index.html /home/myReport/$result/index.html
 				'''
 			}
 		}
