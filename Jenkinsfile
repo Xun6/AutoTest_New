@@ -10,6 +10,7 @@ pipeline{
 			steps{
 				sh '''
                     		  source /etc/profile
+				  pwd
 				  pid=$(ps x | grep "Practice8_InterfaceDevelop-1.0-SNAPSHOT.jar" | grep -v grep | awk '{print $1}')
 				
 				  if [ -n "$pid" ]; then
@@ -17,6 +18,7 @@ pipeline{
 				  fi
 				
 				  cd Practice8_InterfaceDevelop
+				  pwd
 				  mvn clean package
 				  cd target
 				  BUILD_ID=dontKillMe
@@ -39,8 +41,9 @@ pipeline{
 			steps{
 				sh '''
 					result=$(curl -s http://172.18.31.58:8081/job/deploy-pipeline/lastBuild/buildNumber --user root:root)
-					mkdir /opt/Report/$result
-					cp /var/lib/docker/volumes/jenkins-data/_data/workspace/deploy-pipeline/Practice7_MysqlAndMybatisCase/test-output/index.html /opt/Report/$result/index.html
+					pwd
+					mkdir /home/$result
+					cp /var/lib/docker/volumes/jenkins-data/_data/workspace/deploy-pipeline/Practice7_MysqlAndMybatisCase/test-output/index.html /home/$result/index.html
 				'''
 			}
 		}
