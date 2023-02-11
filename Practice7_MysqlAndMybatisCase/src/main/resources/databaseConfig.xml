@@ -12,7 +12,7 @@
                 <!--                加载数据库驱动-->
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
                 <!--                数据库连接地址  为了解决字符问题加入了 ?characterEncoding=utf8-->
-                <property name="url" value="jdbc:mysql://172.18.31.58:3306/xiaoyu_test"/>
+                <property name="url" value="jdbc:mysql://192.168.1.198:3306/xiaoyu_test"/>
                 <!--                数据库用户-->
                 <property name="username" value="root"/>
                 <!--                数据库密码-->

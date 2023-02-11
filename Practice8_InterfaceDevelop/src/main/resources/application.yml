@@ -10,7 +10,7 @@ spring:
     name: UserManager
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://172.18.31.58:3306/xiaoyu_test
+    url: jdbc:mysql://192.168.1.198:3306/xiaoyu_test
     username: root
     password: root
 
