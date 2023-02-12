@@ -43,7 +43,7 @@ pipeline{
 					source /etc/profile
 					result=$(curl -s http://192.168.1.198:8081/job/myFirstTask/lastBuild/buildNumber --user xiaoyu:123456)
 					pwd
-					mkdir /home/myReport/$result
+					mkdir -p /home/myReport/$result
 					cp /var/jenkins_home/workspace/myFirstTask/Practice7_MysqlAndMybatisCase/test-output/index.html /home/myReport/$result/index.html
 				'''
 			}
