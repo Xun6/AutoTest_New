@@ -15,7 +15,7 @@ import java.io.File;
 import java.util.*;
 
 /**
- * 自己重构一个监听类，用于监听生成测试报告，确保可以正常访问web
+ * 重构一个监听类，用于监听生成测试报告，确保可以正常访问web
  */
 public class ExtentTestNGIReporterListener_re implements IReporter {
     //生成的路径以及文件名
@@ -120,7 +120,7 @@ public class ExtentTestNGIReporterListener_re implements IReporter {
         htmlReporter.config().setReportName("小鱼的自动化测试报告");
         htmlReporter.config().setChartVisibilityOnOpen(true);
         htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
-        htmlReporter.config().setTheme(Theme.STANDARD);
+        htmlReporter.config().setTheme(Theme.DARK);
         htmlReporter.config().setCSS(".node.level-1  ul{ display:none;} .node.level-1.active ul{display:block;}");
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);

@@ -1,8 +1,8 @@
 package com.MysqlAndMybatis.cases;
 
 import com.MysqlAndMybatis.config.TestUrlConfig;
-import com.MysqlAndMybatis.models.GetUserInfoIm;
-import com.MysqlAndMybatis.models.UserIm;
+import com.MysqlAndMybatis.models.GetUserInfoCase;
+import com.MysqlAndMybatis.models.User;
 import com.MysqlAndMybatis.utils.DatabaseUtil;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -15,8 +15,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 // 获取用户信息接口测试
@@ -25,16 +23,16 @@ public class GetUserInfoTest {
     @Test(dependsOnGroups = "loginTrue",description = "获取用户信息接口测试")
     public void getUserInfo() throws IOException, InterruptedException {
         SqlSession session = DatabaseUtil.getSqlsession();
-        GetUserInfoIm getUserInfoIm = session.selectOne("getUserInfoCase",1); // 执行sql查询语句
-        System.out.println(getUserInfoIm.toString()); // 打印查询结果
+        GetUserInfoCase getUserInfoCase = session.selectOne("getUserInfoCase",1); // 执行sql查询语句
+        System.out.println(getUserInfoCase.toString()); // 打印查询结果
         System.out.println(TestUrlConfig.getUserInfoUrl); // 打印访问地址
 
         // 请求接口获取结果
-        JSONArray resultJson = getResult(getUserInfoIm);
+        JSONArray resultJson = getResult(getUserInfoCase);
         Thread.sleep(2000);
 
         // 主动执行sql
-        List<UserIm> userList = session.selectList("getUserInfo",getUserInfoIm); // 自己查库获取的信息
+        List<User> userList = session.selectList("getUserInfo", getUserInfoCase); // 自己查库获取的信息
         JSONArray array = new JSONArray(userList);
         //============按照教程来的方法
 //        UserIm userIm = session.selectOne(getUserInfoIm.getExpected(),getUserInfoIm);
@@ -50,11 +48,11 @@ public class GetUserInfoTest {
     }
 
     // http请求逻辑
-    private JSONArray getResult(GetUserInfoIm getUserInfoIm) throws IOException {
+    private JSONArray getResult(GetUserInfoCase getUserInfoCase) throws IOException {
         String result;
         HttpPost post = new HttpPost(TestUrlConfig.getUserInfoUrl);
         JSONObject param = new JSONObject();
-        param.put("id",getUserInfoIm.getUserId());
+        param.put("id", getUserInfoCase.getUserId());
         post.setHeader("content-type","application/json");
         StringEntity entity = new StringEntity(param.toString(),"utf-8"); // 包装请求实体
         post.setEntity(entity);

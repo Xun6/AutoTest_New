@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Practice4_httpclient" />
+        <module name="Practice8_InterfaceDevelop" />
+        <module name="Practice5_springBoot" />
+        <module name="Practice7_MysqlAndMybatisCase" />
+        <module name="Practice6_MyBatis" />
+        <module name="Practice1" />
+        <module name="Practice2" />
+      </profile>
+    </annotationProcessing>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Practice1" options="-parameters" />
+      <module name="Practice2" options="-parameters" />
+      <module name="Practice4_httpclient" options="-parameters" />
+      <module name="Practice5_springBoot" options="-parameters" />
+      <module name="Practice6_MyBatis" options="-parameters" />
+      <module name="Practice7_MysqlAndMybatisCase" options="-parameters" />
+      <module name="Practice8_InterfaceDevelop" options="-parameters -extdirs $PROJECT_DIR$/Practice8_InterfaceDevelop/lib" />
+    </option>
+  </component>
+</project>

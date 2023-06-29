@@ -3,7 +3,7 @@ package com.MysqlAndMybatis.models;
 import lombok.Data;
 
 @Data //（自动生成getter、setter、equals、hashCode和toString，等等!）
-public class UserIm {
+public class User {
     private int id;
     private String userName;
     private String password;

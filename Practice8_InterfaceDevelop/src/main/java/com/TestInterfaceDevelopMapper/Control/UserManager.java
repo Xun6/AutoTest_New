@@ -46,7 +46,7 @@ public class UserManager {
             log.info("登录结果是：" + i + "， 登录成功！");
             return true;
         } else{
-            log.info("登录失败！");
+            log.info("登录失败！"+"查询结果为：" + i);
             return false;
         }
     }
@@ -62,7 +62,7 @@ public class UserManager {
             i = template.insert("addUser",user); // 执行sql语句
         }
         if(i > 0){
-            log.info("添加用户数量是：" + i + "添加成功！！");
+            log.info("添加用户数量是：" + i + " 添加成功！！");
             return true;
         }
         return false;

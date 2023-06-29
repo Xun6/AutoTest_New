@@ -1,8 +1,8 @@
 package com.MysqlAndMybatis.cases;
 
 import com.MysqlAndMybatis.config.TestUrlConfig;
-import com.MysqlAndMybatis.models.GetUserInfoListIm;
-import com.MysqlAndMybatis.models.UserIm;
+import com.MysqlAndMybatis.models.GetUserInfoListCase;
+import com.MysqlAndMybatis.models.User;
 import com.MysqlAndMybatis.utils.DatabaseUtil;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -23,24 +23,24 @@ public class GetUserInfoListTest {
     @Test(dependsOnGroups = "loginTrue",description = "获取用户接口测试")
     public void getUserInfoList() throws IOException, InterruptedException {
         SqlSession session = DatabaseUtil.getSqlsession();
-        GetUserInfoListIm getUserInfoListIm = session.selectOne("getUserListCase",1); //执行sql，查询数据表第一条数据
-        System.out.println(getUserInfoListIm.toString()); // 打印查询结果
+        GetUserInfoListCase getUserInfoListCase = session.selectOne("getUserListCase",1); //执行sql，查询数据表第一条数据
+        System.out.println(getUserInfoListCase.toString()); // 打印查询结果
         System.out.println(TestUrlConfig.getUserListUrl); // 打印访问地址
 
 
         // 请求接口获取结果
-        JSONArray resultJson = getResult(getUserInfoListIm);
+        JSONArray resultJson = getResult(getUserInfoListCase);
         Thread.sleep(2000);
 
-        // 主动执行sql
+        // 主动查询数据库
 //        List<UserIm> userImList = session.selectList(getUserInfoListIm.getExpected(),getUserInfoListIm);
-        List<UserIm> userImList = session.selectList("getUserList",getUserInfoListIm); // 执行另一条sql，返回映射对象列表
+        List<User> userList = session.selectList("getUserList", getUserInfoListCase); // 执行另一条sql，返回映射对象列表
 //        for(UserIm u : userImList){
 //            // 查看一下执行sql获取的信息
 //            System.out.println("list列表保存的用户信息：" + u.toString());
 //        }
         // 从一个集合构造一个JSONArray
-        JSONArray list = new JSONArray(userImList);
+        JSONArray list = new JSONArray(userList);
 
         // 验证结果，验证前后两次查询结果列表长度是否相同
         Assert.assertEquals(list.length(),resultJson.length());
@@ -53,14 +53,14 @@ public class GetUserInfoListTest {
     }
 
     // http请求逻辑
-    private JSONArray getResult(GetUserInfoListIm getUserInfoListIm) throws IOException {
+    private JSONArray getResult(GetUserInfoListCase getUserInfoListCase) throws IOException {
         String result;
         HttpPost post = new HttpPost(TestUrlConfig.getUserListUrl);
         //设置请求参数
         JSONObject param = new JSONObject();
-        param.put("userName",getUserInfoListIm.getUserName());
-        param.put("sex",getUserInfoListIm.getSex());
-        param.put("age",getUserInfoListIm.getAge());
+        param.put("userName", getUserInfoListCase.getUserName());
+        param.put("sex", getUserInfoListCase.getSex());
+        param.put("age", getUserInfoListCase.getAge());
 
         post.setHeader("content-Type","application/json");
 

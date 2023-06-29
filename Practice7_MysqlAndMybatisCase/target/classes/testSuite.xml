@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<suite name="测试套件">
+    <test name="测试用例">
+        <classes>
+            <!--登录接口-->
+            <class name="com.MysqlAndMybatis.cases.LoginTest">
+                <methods>
+                    <include name="loginTrue"/>
+                    <include name="loginfail"/>
+                </methods>
+            </class>
+
+            <!--添加用户接口-->
+            <class name="com.MysqlAndMybatis.cases.AddUserTest">
+                <methods>
+                    <include name="addUser"/>
+                </methods>
+            </class>
+
+            <!--获取用户列表接口-->
+            <class name="com.MysqlAndMybatis.cases.GetUserInfoListTest">
+                <methods>
+                    <include name="getUserInfoList"/>
+                </methods>
+            </class>
+
+            <!--获取用户信息接口-->
+            <class name="com.MysqlAndMybatis.cases.GetUserInfoTest">
+                <methods>
+                    <include name="getUserInfo"/>
+                </methods>
+            </class>
+
+            <!--更新用户信息接口-->
+            <class name="com.MysqlAndMybatis.cases.UpdateUserInfoTest">
+                <methods>
+                    <include name="updateUser"/>
+                    <include name="deleteUser"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
+
+    <!--引入测试报告-->
+    <listeners>
+        <listener class-name="com.MysqlAndMybatis.config.ExtentTestNGIReporterListener_re"/>
+    </listeners>
+</suite>

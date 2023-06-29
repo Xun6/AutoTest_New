@@ -2,7 +2,7 @@ package com.MysqlAndMybatis.cases;
 
 import com.MysqlAndMybatis.config.InterfaceName;
 import com.MysqlAndMybatis.config.TestUrlConfig;
-import com.MysqlAndMybatis.models.LoginIm;
+import com.MysqlAndMybatis.models.LoginCase;
 import com.MysqlAndMybatis.utils.BundleUrlConfig;
 import com.MysqlAndMybatis.utils.DatabaseUtil;
 import org.apache.http.HttpResponse;
@@ -37,49 +37,49 @@ public class LoginTest {
     @Test(groups = "loginTrue",description = "登陆成功接口测试")
     public void loginTrue() throws IOException, InterruptedException {
        SqlSession session = DatabaseUtil.getSqlsession(); //实例化对象，用来执行 sql
-        LoginIm loginIm = session.selectOne("loginCase",1);  //执行sql，查询取出数据表第一条
-        System.out.println(loginIm.toString()); // 打印结果
+        LoginCase loginCase = session.selectOne("loginCase",1);  //执行sql，查询取出数据表第一条
+        System.out.println(loginCase.toString()); // 打印结果
         System.out.println(TestUrlConfig.loginUrl); //打印访问url
 
         // 请求接口
-        String res = getResult(loginIm);
+        String res = getResult(loginCase);
         Thread.sleep(2000);
-        System.out.println(loginIm.getExpected());
-        System.out.println(res);
+        System.out.println(res); //打印请求接口返回的结果
 
         // 验证结果,判断实际结果是否符合期望值 (思路是：数据库中的查询的这条数据与调用这条接口返回的数据结果是否相匹配)
-        Assert.assertEquals(loginIm.getExpected(),res,"实际值与期望不符！");
+        Assert.assertEquals(loginCase.getExpected(),res,"实际值与期望不符！");
     }
 
     @Test(description = "登录失败接口测试")
-    public void loginfail() throws IOException {
+    public void loginfail() throws IOException, InterruptedException {
         SqlSession session = DatabaseUtil.getSqlsession();
-        LoginIm loginIm = session.selectOne("loginCase",2); //执行sql，查询数据表第二条
-        System.out.println(loginIm.toString()); //打印结果
+        LoginCase loginCase = session.selectOne("loginCase",2); //执行sql，查询数据表第二条
+        System.out.println(loginCase.toString()); //打印结果
         System.out.println(TestUrlConfig.loginUrl); //打印访问url
 
         // 请求接口获取结果
-        String result = getResult(loginIm);
+        String result = getResult(loginCase);
+        Thread.sleep(2000);
         System.out.println(result); //打印响应结果
 
         // 验证结果
-        Assert.assertEquals(result,loginIm.getExpected());
+        Assert.assertEquals(result, loginCase.getExpected());
     }
 
     /**
-     * http请求逻辑 (思路是：数据库中主动查询一条数据与用该数据做参数对象调用接口查询数据库
-     * (例如：在登录表中查询一条用户，用此用户调用登录接口
-     * 是否能正常登录，测试用户表中是否有次用户))
-     * @param loginIm 对象参数
+     * http请求逻辑 (思路是：数据库中获取测试驱动数据，用对象传参调用访问接口获取返回结果，再主动查询数据库，对比前后数据是否一致
+     * (例如：在登录case表中查询取出一条用户数据，作为对象传参调用登录接口，访问是否成功
+     * 是否能正常登录，用户是否出存在))
+     * @param loginCase 对象参数
      * @return  返回接口请求结果
      */
-    private String getResult(LoginIm loginIm) throws IOException {
+    private String getResult(LoginCase loginCase) throws IOException {
         String result;
         HttpPost post = new HttpPost(TestUrlConfig.loginUrl);  // 创建post请求
         //添加键值对存储到JSONObject对象，以json格式包装参数
         JSONObject param = new JSONObject();
-        param.put("userName",loginIm.getUserName());
-        param.put("password",loginIm.getPassword());
+        param.put("userName", loginCase.getUserName());
+        param.put("password", loginCase.getPassword());
         //设置请求头信息
         post.setHeader("contant-type","application/json");
         //将参数信息添加到方法中,指定mime类型

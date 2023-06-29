@@ -1,6 +1,6 @@
 package com.MysqlAndMybatis.config;
 
-//表示接口需满足此规范
+//接口需满足此规范
 public enum InterfaceName {
     ADDUSER,
     GETUSERINFO,

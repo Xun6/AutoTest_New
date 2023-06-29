@@ -3,8 +3,7 @@ package com.MysqlAndMybatis.models;
 import lombok.Data;
 
 @Data
-public class GetUserInfoIm {
-    private int id;
+public class GetUserInfoCase {
     private int userId;
     private String expected;
 }
