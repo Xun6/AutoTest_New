@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="renderer" content="webkit">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<title>网站后台管理模版</title>
+	<!--<link rel="stylesheet" type="text/css" href="layui/css/layui.css" />-->
+	<link href="//unpkg.com/layui@2.8.0/dist/css/layui.css" rel="stylesheet" />
+	<link rel="stylesheet" type="text/css" href="css/admin.css" />
+</head>
+
+<body>
+	<div class="page-content-wrap" id="userSearch">
+		<h5 style="text-align:center;font-size: 20px;line-height: 25px;color:#666">用户信息管理界面</h5>
+		<hr>
+		<div class="layui-form-item">
+			<div class="layui-inline tool-btn">
+				<button class="layui-btn layui-btn-small site-demo-active"
+						data-type="tabAdd">
+					<i class="layui-icon">&#xe654;</i>
+				</button>
+			</div>
+			<div class="layui-inline">
+				<input type="text" id="userNameSearch" placeholder="请输入用户姓名" autocomplete="off" class="layui-input">
+			</div>
+			<button class="layui-btn layui-btn-normal site-demo-active"
+					data-type="search"
+					id="searchUser">搜索
+			</button>
+
+<!--			定义表格基础属性-->
+			<table class="layui-table" lay-options="{url:'/v1/getAllUser',page:true,id:'idTest'}" lay-filter="demo">
+				<thead>
+					<tr>
+<!--						定义表头属性-->
+						<th lay-options="{type:'checkbox', }"></th>
+						<th lay-options="{field:'id',sort: true}">用户ID</th>
+						<th lay-options="{field:'userName'}">姓名</th>
+						<th lay-options="{field:'age'}">年龄</th>
+						<th lay-options="{field:'sex'}">性别</th>
+						<th lay-options="{field:'permission'}">权限</th>
+<!--						工具条事件-->
+						<th lay-options="{fixed: 'right', width:220, align:'left', toolbar: '#barDemo'}">操作</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+
+		<script type="text/html" id="barDemo">
+		  <a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">查看</a>
+		  <a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
+		  <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
+		</script>
+
+		<hr>
+		<h5 style="text-align: center;">@2023.用户信息管理系统</h5>
+	</div>
+
+	<script src="//unpkg.com/layui@2.8.0/dist/layui.js"></script>
+	<script>
+		layui.use('table', function() {
+			var $ = layui.jquery;
+			var table = layui.table;
+			var layer = layui.layer;
+			var form = layui.form;
+
+			//监听表格复选框选择
+			table.on('checkbox(demo)', function(obj) {
+				//console.log(obj);	// 查看对象所有成员
+				console.log(obj.data); // 选中行的相关数据
+  				console.log(obj.type); // 若触发的是全选，则为：all；若触发的是单选，则为：one
+			});
+
+			//监听工具条
+			table.on('tool(demo)', function(obj) {
+				var data = obj.data; // 得到当前行数据
+
+				//查看详情事件
+				if (obj.event === 'detail') {
+					// 设置弹出层
+					var detailFrom = layer.open({
+				        title : '查看用户信息', 				// 弹出层标题
+				        type : 2,							// iframe内联框架层
+				        shadeClose: true,					// 点击遮罩区域，关闭弹层
+				        shade: 0.7,							// 遮罩透明度
+				        content : '/userDetail.html',		//弹出层页面
+				        area: ['500px', '250px'],
+				        success : function(layero, index){
+				        	// 弹层的最外层元素的 jQuery 对象
+				        	console.log(layero);
+				        	// 获取 iframe 中 body 元素的 jQuery 对象
+				            var body = layer.getChildFrame('body', index);
+				            // 给 iframe 页中的字段赋值
+							body.find("#userId").text(data.id);
+				            body.find("#userName").text(data.userName);
+				            body.find("#age").text(data.age);
+				            body.find("#sex").text(data.sex);
+				            body.find("#permission").text(data.permission);
+				        }
+				    });
+				}
+
+				//删除事件
+				if (obj.event === 'del') {
+					layer.confirm('确定删除该用户吗？', {shade: 0.7}, function(index){
+						console.log(data);//当前行的相关数据
+						console.log(data.id);
+						//发起请求
+						$.ajax({
+							type: 'POST',//传参的方式
+							dataType: 'json',//预期服务器返回的数据类型
+							url: '/v1/deleteUser'+"?userId="+data.id,
+							//data: data,//请求的参数
+							success: function(result){
+								if(result.code == "0"){
+									obj.del(); // 删除对应行（tr）的 DOM 结构，并更新缓存
+									layer.close(index);
+									layer.msg('删除成功', {icon: 1});
+									//重新加载数据
+									table.reloadData('idTest',{
+										page: {curr: 1}
+									});
+								} else {
+									layer.msg('删除失败', {icon: 5, anim: 6});
+								}
+							},
+							error: function(){
+								layer.msg('服务器错误', {icon: 5, anim: 6});
+							}
+						});
+					});
+				}
+
+				//编辑事件
+				if (obj.event === 'edit') {
+					var editFrom = layer.open({
+				        title : "编辑用户信息",
+				        type : 2,
+				        content : "/userEdit.html",//弹出层页面
+				        area: ['800px', '400px'],
+				        success : function(layero, index){
+				        	// 弹层的最外层元素的 jQuery 对象
+    						console.log(layero);
+    						console.log(index);
+				            var body = layer.getChildFrame('body', index);
+				            // 获取窗口对象
+				            var iframeWindow = layero.find('iframe')[0].contentWindow;
+
+				            // 给 iframe 页中的某个输入框赋值
+				            body.find("#userId").val(data.id);
+				            body.find("#userName").val(data.userName);
+				            body.find("#age").val(data.age);
+				            body.find(".userSex option[value="+data.sex+"]").attr("selected","selected");
+				            iframeWindow.layui.form.render();//更新全部
+				            iframeWindow.layui.form.render('select');//刷新select选择框渲染
+				        }
+				    });
+				}
+			});
+
+			//定义触发事件
+			var active = {
+				//添加用户
+				tabAdd: function() {
+					layer.open({
+					      type: 2,
+					      title: '添加用户信息',
+					      shadeClose: true,// 点击遮罩区域，关闭弹层
+					      shade: 0.6, //遮罩透明度
+					      area: ['800px', '400px'],
+					      content: '/userAdd.html'
+					});
+				},
+				//搜索框查询用户
+				search: function(){
+					var name=$("#userNameSearch").val();//赋值给搜索框
+					table.reload('idTest',{
+						method: 'GET',
+						where: {
+							"userName": name
+						},
+						page: {
+						    curr: 1 //重新从第 1 页开始
+						}
+					})
+				}
+			};
+
+			$('#userSearch .layui-btn').on('click', function() {
+				var type = $(this).data('type');
+				console.log(type);
+				active[type] ? active[type].call(this) : '';
+			});
+		});
+	</script>
+</body>
+
+</html>

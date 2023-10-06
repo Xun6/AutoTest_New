@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理系统</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="layui/css/layui.css" rel="stylesheet">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body>
+    <div class="page-content-wrap" id="userSearch">
+        <h5 style="text-align:center;font-size: 20px;line-height: 25px;color:#666">用户信息管理界面</h5>
+        <hr>
+        <div class="layui-form-item">
+            <div class="layui-inline tool-btn">
+                <button class="layui-btn layui-btn-small site-demo-active"
+                        data-type="tabAdd">
+                    <i class="layui-icon">&#xe654;</i>
+                </button>
+            </div>
+            <div class="layui-inline">
+                <input type="text" id="userNameSearch" placeholder="请输入用户姓名" autocomplete="off" class="layui-input">
+            </div>
+            <button class="layui-btn layui-btn-normal site-demo-active"
+                    data-type="search"
+                    id="searchUser">搜索
+            </button>
+        </div>
+
+        <!--			定义表格基础属性-->
+        <table class="layui-hide" id="test" lay-filter="test"></table>
+
+        <script type="text/html" id="toolbarDemo">
+            <div class="layui-btn-container">
+                <button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>
+                <button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>
+                <button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>
+            </div>
+        </script>
+
+        <script type="text/html" id="barDemo">
+            <a class="layui-btn layui-btn-normal layui-btn-sm" lay-event="detail">查看</a>
+            <a class="layui-btn layui-btn-sm" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del">删除</a>
+        </script>
+
+        <hr>
+        <h5 style="text-align: center;">@2023.用户信息管理系统</h5>
+    </div>
+
+    <!-- 引入 layui.js -->
+    <script src="layui/layui.js"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述 JS 路径需要改成你本地的 -->
+
+    <script>
+    layui.use(function(){
+        var table = layui.table;
+        var $ = layui.jquery;
+		var layer = layui.layer;
+		var form = layui.form;
+
+        //温馨提示：默认由前端自动合计当前行数据。从 layui 2.5.6 开始： 若接口直接返回了合计行数据，则优先读取接口合计行数据。
+        //详见：https://doc/modules/table.html#totalRow
+        table.render({
+            elem: '#test'
+            ,id: 'idTest'
+            ,url:'/v1/getAllUser'
+            ,toolbar: '#toolbarDemo'
+            ,title: '用户数据表'
+            ,page: {
+                layout: ['count','prev','page','next','skip','limit']
+                ,limits: [5, 10, 15, 20, 50, 100]
+                ,limit: 5
+            }
+            ,loading: true
+            ,cols: [[
+                {type: 'checkbox', fixed: 'left'}
+                ,{field:'id', title:'用户ID', fixed: 'left', sort: true}
+                ,{field:'userName', title:'用户名'}
+                ,{field:'age', title:'年龄', sort: true}
+                ,{field:'sex', title:'性别', sort: false}
+                ,{field:'permission', title:'权限', sort: false}
+                ,{fixed: 'right', title:'操作', toolbar: '#barDemo',width: 200}
+            ]]
+        });
+
+        //头部工具栏事件
+        table.on('toolbar(test)', function(obj){
+            var checkStatus = table.checkStatus(obj.config.id);
+            console.log("当前配置信息是："+obj.config);
+            switch(obj.event){
+                case 'getCheckData':
+                    var data = checkStatus.data;
+                    layer.alert(JSON.stringify(data));
+                    break;
+                case 'getCheckLength':
+                    var data = checkStatus.data;
+                    layer.msg('选中了：'+ data.length + ' 个');
+                    break;
+                case 'isAll':
+                    layer.msg(checkStatus.isAll ? '全选': '未全选')
+                    break;
+            };
+        });
+
+        //监听单元格工具栏事件
+        table.on('tool(test)', function(obj) {
+            var data = obj.data; // 得到当前行数据
+
+            //查看详情事件
+            if (obj.event === 'detail') {
+                // 设置弹出层
+                var detailFrom = layer.open({
+                    title : '查看用户信息', 				// 弹出层标题
+                    type : 2,							// iframe内联框架层
+                    shadeClose: true,					// 点击遮罩区域，关闭弹层
+                    shade: 0.7,							// 遮罩透明度
+                    content : '/userDetail.html',		//弹出层页面
+                    area: ['500px', '250px'],
+                    success : function(layero, index){
+                        // 弹层的最外层元素的 jQuery 对象
+                        console.log(layero);
+                        // 获取 iframe 中 body 元素的 jQuery 对象
+                        var body = layer.getChildFrame('body', index);
+
+                        // 给 iframe 页中的字段赋值
+                        body.find("#userId").text(data.id);
+                        body.find("#userName").text(data.userName);
+                        body.find("#age").text(data.age);
+                        body.find("#sex").text(data.sex);
+                        body.find("#permission").text(data.permission);
+                    }
+                });
+            }
+
+            //删除事件
+            if (obj.event === 'del') {
+                layer.confirm('确定删除该用户吗？', {shade: 0.7}, function(index){
+                    console.log(data);//当前行的相关数据
+                    console.log(data.id);
+                    //发起请求
+                    $.ajax({
+                        type: 'POST',//传参的方式
+                        dataType: 'json',//预期服务器返回的数据类型
+                        url: '/v1/deleteUser'+"?userId="+data.id,
+                        //data: data,//请求的参数
+                        success: function(result){
+                            if(result.code == "0"){
+                                obj.del(); // 删除对应行（tr）的 DOM 结构，并更新缓存
+                                layer.close(index);
+                                layer.msg('删除成功', {icon: 1});
+                                //重新加载数据
+                                table.reloadData('idTest',{
+                                    page: {curr: 1}
+                                });
+                            } else {
+                                layer.msg('删除失败', {icon: 5, anim: 6});
+                            }
+                        },
+                        error: function(){
+                            layer.msg('服务器错误', {icon: 5, anim: 6});
+                        }
+                    });
+                });
+            }
+
+            //编辑事件
+            if (obj.event === 'edit') {
+                var editFrom = layer.open({
+                    title : "编辑用户信息",
+                    type : 2,
+                    content : "/userEdit.html",//弹出层页面
+                    area: ['800px', '400px'],
+                    success : function(layero, index){
+                        // 弹层的最外层元素的 jQuery 对象
+                        console.log(layero);
+                        var body = layer.getChildFrame('body', index);
+                        // 获取窗口对象
+                        var iframeWindow = layero.find('iframe')[0].contentWindow;
+
+                        // 给 iframe 页中的某个输入框赋值
+                        body.find("#userId").val(data.id);
+                        body.find("#userName").val(data.userName);
+                        body.find("#age").val(data.age);
+                        body.find(".userSex option[value="+data.sex+"]").attr("selected","selected");
+                        iframeWindow.layui.form.render();//更新全部
+                        iframeWindow.layui.form.render('select');//刷新select选择框渲染
+                    }
+                });
+            }
+        });
+
+        //定义触发事件
+        var active = {
+            //添加用户
+            tabAdd: function() {
+                layer.open({
+                      type: 2,
+                      title: '添加用户信息',
+                      shadeClose: true,// 点击遮罩区域，关闭弹层
+                      shade: 0.6, //遮罩透明度
+                      area: ['800px', '400px'],
+                      content: '/userAdd.html'
+                });
+            },
+            //搜索框查询用户
+            search: function(){
+                var name=$("#userNameSearch").val();//赋值给搜索框
+                table.reload('idTest',{
+                    method: 'GET',
+                    where: {
+                        "userName": name
+                    },
+                    page: {
+                        curr: 1 //重新从第 1 页开始
+                    }
+                })
+            }
+        };
+
+        $('#userSearch .layui-btn').on('click', function() {
+            var type = $(this).data('type');
+            console.log(type);
+            active[type] ? active[type].call(this) : '';
+        });
+    });
+    </script>
+</body>
+</html>

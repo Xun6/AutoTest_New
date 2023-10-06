@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="layui/css/layui.css"    media="all">
+    <script src="layui/layui.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="layui/mymod/mymod.js"></script>
+    <script src="layui/mymod-config.js"></script>
+</head>
+<body>
+  <h3>请输入：</h3>
+  <input type="text" value="Leaf" id="layui_test1_input">
+  <button id="layui_test1_btn" style="cursor: pointer;">点我</button>
+  <input type="text" value="Leaf" id="layui_test2_input">
+  <button id="layui_test2_btn" style="cursor: pointer;">自定义模块</button>
+  <script>
+          //导入js相关的模块jquery.js
+          layui.use(['layer', 'form', 'jquery', 'mymod'], function(){
+            //将模块赋值给变量$
+            var layer = layui.layer
+            ,form = layui.form
+            ,$ = layui.jquery
+            ,mymod = layui.mymod;
+            $("#layui_test1_btn").click(function(){
+               var val = $("#layui_test1_input").val();
+               layer.msg(val);
+            });
+            $("#layui_test2_btn").click(function(){
+               var val2 = $("#layui_test2_input").val();
+               mymod.say(val2);
+               mymod.hello(val2);
+            });
+            layer.msg('Hello World');
+          });
+  </script>
+</body>
+</html>

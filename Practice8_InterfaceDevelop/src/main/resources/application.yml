@@ -15,6 +15,16 @@ spring:
     password: 12345678
 
 mybatis:
-  type-aliases-package: com.TestInterfaceDevelopMapper
+  type-aliases-package: com.TestInterfaceDevelopMapper.mapper
+  #控制台打印sql语句
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
   mapper-locations:
     - Mapper/*
+
+#MyBatis使用pageHelper分页
+pagehelper:
+  hepler-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql

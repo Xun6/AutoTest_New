@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>后台登录</title>
+		<!-- 引入 layui.css -->
+		<link href="/layui/css/layui.css" rel="stylesheet">
+		<script src="/layui/layui.js"></script>
+<!--		<link href="//unpkg.com/layui@2.8.17/dist/css/layui.css" rel="stylesheet">-->
+<!--		<script src="//unpkg.com/layui@2.8.17/dist/layui.js"></script>-->
+		<link rel="stylesheet" type="text/css" href="css/login.css" />
+		<script src="/webjars/jquery/3.6.3/dist/jquery.min.js"></script>
+
+	</head>
+
+	<body>
+		<div class="m-login-bg">
+			<div class="m-login">
+				<h3>用户管理系统</h3>
+				<div class="m-login-warp">
+					<form class="layui-form">
+						<div class="layui-form-item">
+							<input type="text" name="userName" required lay-verify="required" placeholder="用户名" autocomplete="off" class="layui-input">
+						</div>
+						<div class="layui-form-item">
+							<input type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off" class="layui-input" lay-affix="eye">
+						</div>
+						<div class="layui-form-item m-login-btn">
+							<div class="layui-inline">
+								<button class="layui-btn layui-btn-normal" id="btn-login" lay-submit lay-filter="login">登录</button>
+							</div>
+							<div class="layui-inline">
+								<button type="reset" class="layui-btn layui-btn-primary">取消</button>
+							</div>
+						</div>
+					</form>
+				</div>
+
+				<hr></hr>
+				<p class="copyright">Copyright 2023-2023 by 用户管理系统</p>
+			</div>
+		</div>
+
+		<!-- 引入 layui.js -->
+
+		<script>
+			layui.use(function(){
+				var form = layui.form,
+					layer = layui.layer,
+					$ = layui.jquery;
+
+					//自定义验证规则
+					form.verify({
+						userName: function(value){
+							if(value.length < 4){
+								return '用户名至少4个字符';
+							}
+						},
+						password: [/(.+){5,12}$/, '密码必须5到12位']
+					});
+
+					//监听提交表单
+					form.on('submit(login)',function(data){
+						var data = data.field;
+						//console.log(data.field);
+						//var str = JSON.stringify(data.field);
+			           	//var param = JSON.parse(str);
+
+			           	//将登陆按钮置灰不可用，防止重复点击
+						$("#btn-login").attr("disabled","disabled").addClass("layui-btn-disabled");
+
+			           	$.ajax({
+			           		type: "POST",//方法类型
+							dataType: "json",//预期服务器返回的数据类型
+							url: "/v1/login",//url
+							data: data,
+							success: function(result){
+								if(result.code == "0"){
+									layer.msg(result.msg,{icon: 6,time: 3000});
+									location.href="/index.html";
+								} else {
+									layer.msg(result.msg,{icon: 5,anim: 6});
+									//将登陆按钮取消置灰，恢复可用
+									$("#btn-login").removeAttr("disabled","disabled").removeClass("layui-btn-disabled");
+								}
+							},
+							error: function(){
+								layer.msg('服务器错误',{icon: 5});
+							}
+			           	});
+			           	return false; // 阻止默认 form 跳转
+					});
+			});
+		</script>
+	</body>
+
+</html>

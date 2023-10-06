@@ -80,13 +80,14 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.78</version>
+            <version>1.2.83</version>
         </dependency>
 
         <!--        添加链接数据库驱动依赖（JDBC Type 4 driver for MySQL）-->
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.30</version>
         </dependency>
 
         <!--        添加集成库，链接Spring Boot和MyBatis-->
@@ -95,5 +96,26 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.2.0</version>
         </dependency>
+
+<!--        &lt;!&ndash;        数据源&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>druid</artifactId>-->
+<!--            <version>1.0.29</version>-->
+<!--        </dependency>        -->
+
+        <!--        前端页面请求接口-->
+        <dependency>
+            <groupId>org.webjars.bower</groupId>
+            <artifactId>jquery</artifactId>
+            <version>3.6.3</version>
+        </dependency>
+        <!-- 好用的分页插件 -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.4.6</version>
+        </dependency>
+
     </dependencies>
 </project>

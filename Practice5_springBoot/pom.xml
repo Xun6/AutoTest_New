@@ -75,6 +75,11 @@
             <artifactId>lombok</artifactId>
             <version>1.18.20</version>
         </dependency>
+        <dependency>
+            <groupId>au.com.dius</groupId>
+            <artifactId>pact-jvm-provider-spring_2.12</artifactId>
+            <version>3.6.15</version>
+        </dependency>
 
     </dependencies>
 
