@@ -140,12 +140,15 @@
                 layer.confirm('确定删除该用户吗？', {shade: 0.7}, function(index){
                     console.log(data);//当前行的相关数据
                     console.log(data.id);
+                    //var param = JSON.stringify(data.id);
+                    //console.log(param);
                     //发起请求
                     $.ajax({
                         type: 'POST',//传参的方式
                         dataType: 'json',//预期服务器返回的数据类型
+                        //contentType: 'application/json',  //有请求体穿参接口适用
                         url: '/v1/deleteUser'+"?userId="+data.id,
-                        //data: data,//请求的参数
+                        //data: param,  //请求的参数
                         success: function(result){
                             if(result.code == "0"){
                                 obj.del(); // 删除对应行（tr）的 DOM 结构，并更新缓存

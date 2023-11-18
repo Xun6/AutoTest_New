@@ -9,10 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -43,10 +40,15 @@ public class UserController {
         Cookie cookie = new Cookie("login","true"); //创建一个指定的cookies信息
         response.addCookie(cookie);                             // 将cookies信息作为响应数据返回
         if (i != null && i != 0){
-            //登陆成功
-            request.getSession().setAttribute("user",i);
-            log.info("登录结果是：" + i + "， 登录成功！");
-            return ResultObject.success();
+            //判断登陆密码必须合规
+            if (password.equals("123456")){
+                //登陆成功
+                request.getSession().setAttribute("user",i);
+                log.info("登录结果是：" + i + "， 登录成功！");
+                return ResultObject.success();
+            }else {
+                return ResultObject.fail("登陆失败，用户名或密码错误!");
+            }
         }
         //登陆失败
         log.info("登录失败！"+"查询结果为：" + i);
@@ -70,22 +72,17 @@ public class UserController {
 
     @ApiOperation(value = "获取全部用户",httpMethod = "GET")
     @RequestMapping(value = "/getAllUser",method = RequestMethod.GET)
-    public ResultObject<List<User>> getUser(HttpServletRequest request, User user, @RequestParam("page") Integer page,@RequestParam("limit") Integer limit){
+    public ResultObject<List<User>> getUser(HttpServletRequest request, User user, @RequestParam("page") Integer page, @RequestParam("limit") Integer limit){
         boolean b = verifyCookies(request);
         ResultObject<List<User>> rs = new ResultObject<>();
         if(b){
             //获得分页处理后的数据
             PageInfo<User> userPageInfo = userService.selectAll(user,page,limit);
-//            System.out.println("传参页码："+page);
-//            System.out.println("传参页面数据量："+limit);
-//            System.out.println("总记录数："+userPageInfo.getTotal());
-//            System.out.println("当前页："+userPageInfo.getPageNum());
-//            System.out.println("每页的数量："+userPageInfo.getPageSize());
-//            System.out.println("当前页的数量："+userPageInfo.getSize());
             rs.setCode("0");
             rs.setMsg("查询成功");
             rs.setData(userPageInfo.getList());
             rs.setCount(userPageInfo.getTotal());
+            System.out.println("打印响应结果："+rs);
             return rs;
         }
         rs.setMsg("验证失败，请先登陆！");
@@ -95,7 +92,7 @@ public class UserController {
 
     @ApiOperation(value = "删除用户",httpMethod = "POST")
     @RequestMapping(value = "/deleteUser",method = RequestMethod.POST)
-    public Object delUser(HttpServletRequest request, @RequestParam("userId") Integer userId){
+    public Object delUser(HttpServletRequest request, @RequestParam int userId){
         boolean b = verifyCookies(request);
         if (b){
             Integer i = userService.deleteUser(userId);
@@ -114,7 +111,7 @@ public class UserController {
 
     @ApiOperation(value = "添加用户",httpMethod = "POST")
     @RequestMapping(value = "/addUser",method = RequestMethod.POST)
-    public ResultObject<Object> addUser(HttpServletRequest request, User user){
+    public ResultObject<Object> addUser(HttpServletRequest request, @RequestBody User user){
         boolean b = verifyCookies(request);
         if (b){
             Integer u = userService.insertUser(user);
@@ -130,7 +127,7 @@ public class UserController {
 
     @ApiOperation(value = "更新用户信息",httpMethod = "POST")
     @RequestMapping(value = "/updateUserInfo",method = RequestMethod.POST)
-    public ResultObject<Object> updateUserInfo(HttpServletRequest request, User user){
+    public ResultObject<Object> updateUserInfo(HttpServletRequest request, @RequestBody User user){
         boolean b = verifyCookies(request);
         if (b){
             Integer i = userService.updateUser(user);

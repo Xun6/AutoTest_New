@@ -10,7 +10,7 @@ import java.util.ResourceBundle;
 public class BundleUrlConfig {
 
     //绑定配置文件
-    private static ResourceBundle bundle = ResourceBundle.getBundle("application", Locale.CHINA);
+    private static final ResourceBundle bundle = ResourceBundle.getBundle("application", Locale.CHINA);
 
     /**
      * 拼接测试接口地址逻辑
@@ -26,8 +26,8 @@ public class BundleUrlConfig {
             uri = bundle.getString("addUser.uri");
         }
         //若满足枚举类型 GETUSERINFO
-        if (interfaceName == InterfaceName.GETUSERINFO){
-            uri = bundle.getString("getUserInfo.uri");
+        if (interfaceName == InterfaceName.DELETEUSER){
+            uri = bundle.getString("deleteUser.uri");
         }
         //若满足枚举类型 GETUSERLIST
         if (interfaceName == InterfaceName.GETUSERLIST){

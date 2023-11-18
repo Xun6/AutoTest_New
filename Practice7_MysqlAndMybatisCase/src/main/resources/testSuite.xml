@@ -25,18 +25,17 @@
                 </methods>
             </class>
 
-            <!--获取用户信息接口-->
-            <class name="com.MysqlAndMybatis.cases.GetUserInfoTest">
-                <methods>
-                    <include name="getUserInfo"/>
-                </methods>
-            </class>
-
-            <!--更新用户信息接口-->
+            <!--更新用户接口-->
             <class name="com.MysqlAndMybatis.cases.UpdateUserInfoTest">
                 <methods>
                     <include name="updateUser"/>
-                    <include name="deleteUser"/>
+                </methods>
+            </class>
+
+            <!--删除用户接口-->
+            <class name="com.MysqlAndMybatis.cases.DeleteUserTest">
+                <methods>
+                    <include name="delUser"/>
                 </methods>
             </class>
         </classes>

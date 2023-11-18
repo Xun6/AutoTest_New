@@ -15,66 +15,76 @@
         select * from addusercase where id=#{id};   <!--根据id查询表数据-->
     </select>
 
-    <!--获取用户信息case-->
-    <select id="getUserInfoCase" parameterType="Integer" resultType="com.MysqlAndMybatis.models.GetUserInfoCase">
+    <!--删除用户接口case-->
+    <select id="deleteUserCase" parameterType="Integer" resultType="com.MysqlAndMybatis.models.DeleteUserCase">
         <!-- SQL语句 -->
-        select * from getuserinfocase where id=#{id};   <!--根据id查询表数据-->
+        select * from deleteusercase where id=#{id};   <!--根据id查询表数据-->
     </select>
 
-    <!--获取用户列表case-->
-    <select id="getUserListCase" parameterType="Integer" resultType="com.MysqlAndMybatis.models.GetUserInfoListCase">
+    <!--获取用户列表接口case-->
+    <select id="getUserListCase" parameterType="Integer" resultType="com.MysqlAndMybatis.models.GetUserListCase">
         <!-- SQL语句 -->
         select * from getuserlistcase where id=#{id};   <!--根据id查询表数据-->
     </select>
 
-    <!--更新/删除用户信息case-->
+    <!--更新用户信息接口case-->
     <select id="updateUserInfoCase" parameterType="Integer" resultType="com.MysqlAndMybatis.models.UpdateUserInfoCase">
         select * from updateuserinfocase where id = #{id};    <!--根据id查询表数据-->
     </select>
 
 
 
-    <!--如下是主动查询数据库，获取期望数据，与调用接口返回的数据校验是否一致-->
-    <!--添加用户-->
+    <!--如下是主动查询数据库，检验请求接口后存储于数据库中的数据前后是否一致-->
+    <!--查询添加用户-->
     <select id="addUser" parameterType="com.MysqlAndMybatis.models.AddUserCase" resultType="com.MysqlAndMybatis.models.User">
-        select * from user where
-        userName=#{userName}
-        and password=#{password}
-        and sex=#{sex}
-        and age=#{age};
+        select id,user_name userName,password,sex,age,permission from user
+        <where>
+            <if test="userName !=null and userName !=''">
+                and user_name=#{userName}
+            </if>
+            <if test="password !=null and password !=''">
+                and password=#{password}
+            </if>
+            <if test="sex !=null and sex !=''">
+                and sex=#{sex}
+            </if>
+            <if test="age !=null and age !=''">
+                and age=#{age}
+            </if>
+            <if test="permission !=null and permission !=''">
+                and permission=#{permission}
+            </if>
+        </where>
     </select>
+<!--    刷新数据库-->
+    <update id="flushTable">
+        FLUSH TABLE;
+    </update>
 
-    <!--获取用户信息-->
-    <select id="getUserInfo" parameterType="com.MysqlAndMybatis.models.GetUserInfoCase" resultType="com.MysqlAndMybatis.models.User">
+    <!--删除用户-->
+    <select id="deleteUser" parameterType="com.MysqlAndMybatis.models.DeleteUserCase" resultType="com.MysqlAndMybatis.models.User">
         <!-- SQL语句 -->
-        select * from user where
-        id=#{userId};
+        select id,user_name userName,password,sex,age,permission from user where
+        id=#{userId} and user_name=#{userName};
     </select>
 
-    <!--获取用户列表-->
-    <select id="getUserList" parameterType="com.MysqlAndMybatis.models.GetUserInfoListCase" resultType="com.MysqlAndMybatis.models.User">
-        <!-- SQL语句 -->
-        select * from user
-        <trim prefix="WHERE" prefixOverrides="and">
-            <if test="null != userName and '' !=userName">
-                AND userName=#{userName}
-            </if>
-            <if test="null != sex and '' !=sex">
-                AND sex=#{sex}
-            </if>
-            <if test="null != age and '' !=age">
-                AND age=#{age}
-            </if>
-        </trim>
-        ;
-    </select>
+<!--    &lt;!&ndash;获取用户列表&ndash;&gt;-->
+<!--    <select id="getUserList" parameterType="com.MysqlAndMybatis.models.GetUserListCase" resultType="com.MysqlAndMybatis.models.User">-->
+<!--        &lt;!&ndash; SQL语句 &ndash;&gt;-->
+<!--        select * from user-->
+<!--        <where>-->
+<!--            <if test="userName !=null and userName !=''">-->
+<!--                and user_name like concat('%',#{userName},'%')-->
+<!--            </if>-->
+<!--        </where>-->
+<!--    </select>-->
 
-    <!--获取更新后的数据-->
+    <!--查询更新用户-->
     <select id="getUpdateUserInfo" parameterType="com.MysqlAndMybatis.models.UpdateUserInfoCase" resultType="com.MysqlAndMybatis.models.User">
-        select * from user
+        select id,user_name userName,password,sex,age,permission from user
         <trim prefix="WHERE" prefixOverrides="and">
             <if test="null != userName and '' !=userName">
-                AND userName=#{userName}
+                AND user_name=#{userName}
             </if>
             <if test="null != sex and '' !=sex">
                 AND sex=#{sex}
@@ -82,13 +92,6 @@
             <if test="null != age and '' !=age">
                 AND age=#{age}
             </if>
-            <if test="null != permission and '' !=permission">
-                AND permission=#{permission}
-            </if>
-            <if test="null != isDelete and '' !=isDelete">
-                AND isDelete=#{isDelete}
-            </if>
         </trim>
-        And id = #{userId};
     </select>
 </mapper>

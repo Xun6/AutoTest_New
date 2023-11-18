@@ -12,7 +12,6 @@ public class User implements Serializable {
     private String age;
     private String sex;
     private String permission;
-    private String isDelete;
 
 
     private static final long serialVersionUID = 1L;

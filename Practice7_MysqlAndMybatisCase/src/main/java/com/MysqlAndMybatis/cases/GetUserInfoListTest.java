@@ -1,21 +1,18 @@
 package com.MysqlAndMybatis.cases;
 
 import com.MysqlAndMybatis.config.TestUrlConfig;
-import com.MysqlAndMybatis.models.GetUserInfoListCase;
-import com.MysqlAndMybatis.models.User;
+import com.MysqlAndMybatis.models.GetUserListCase;
 import com.MysqlAndMybatis.utils.DatabaseUtil;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.ibatis.session.SqlSession;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
-import java.util.List;
 
 //获取用户列表接口测试
 public class GetUserInfoListTest {
@@ -23,57 +20,43 @@ public class GetUserInfoListTest {
     @Test(dependsOnGroups = "loginTrue",description = "获取用户接口测试")
     public void getUserInfoList() throws IOException, InterruptedException {
         SqlSession session = DatabaseUtil.getSqlsession();
-        GetUserInfoListCase getUserInfoListCase = session.selectOne("getUserListCase",1); //执行sql，查询数据表第一条数据
-        System.out.println(getUserInfoListCase.toString()); // 打印查询结果
-        System.out.println(TestUrlConfig.getUserListUrl); // 打印访问地址
+        GetUserListCase getUserInfoListCase = session.selectOne("getUserListCase",1); //执行sql，查询数据表第一条数据
+        System.out.println("获取用户列表接口测试用例："+getUserInfoListCase.toString()); // 打印查询结果
+        System.out.println("接口地址："+TestUrlConfig.getUserListUrl); // 打印访问地址
 
 
         // 请求接口获取结果
-        JSONArray resultJson = getResult(getUserInfoListCase);
+        String resultJson = getResult(getUserInfoListCase);
         Thread.sleep(2000);
+        //打印请求接口返回的响应体
+        System.out.println("=========");
+        System.out.println("接口响应结果输出："+resultJson);
+        System.out.println("=========");
 
-        // 主动查询数据库
-//        List<UserIm> userImList = session.selectList(getUserInfoListIm.getExpected(),getUserInfoListIm);
-        List<User> userList = session.selectList("getUserList", getUserInfoListCase); // 执行另一条sql，返回映射对象列表
-//        for(UserIm u : userImList){
-//            // 查看一下执行sql获取的信息
-//            System.out.println("list列表保存的用户信息：" + u.toString());
-//        }
-        // 从一个集合构造一个JSONArray
-        JSONArray list = new JSONArray(userList);
+        // 断言
+        Assert.assertTrue(resultJson.contains("查询成功"),"接口访问失败！");
 
-        // 验证结果，验证前后两次查询结果列表长度是否相同
-        Assert.assertEquals(list.length(),resultJson.length());
-        // 验证前后两次查询数据实际值和预期值是否一一匹配
-        for(int i=0; i < resultJson.length(); i++){
-            JSONObject actual = (JSONObject) list.get(i);
-            JSONObject expect = (JSONObject) resultJson.get(i);
-            Assert.assertEquals(actual.toString(),expect.toString());
-        }
     }
 
     // http请求逻辑
-    private JSONArray getResult(GetUserInfoListCase getUserInfoListCase) throws IOException {
+    private String getResult(GetUserListCase getUserInfoListCase) throws IOException {
         String result;
-        HttpPost post = new HttpPost(TestUrlConfig.getUserListUrl);
-        //设置请求参数
-        JSONObject param = new JSONObject();
-        param.put("userName", getUserInfoListCase.getUserName());
-        param.put("sex", getUserInfoListCase.getSex());
-        param.put("age", getUserInfoListCase.getAge());
+        //创建get请求，设置参数
+        HttpGet get = new HttpGet(TestUrlConfig.getUserListUrl+ "?page="+getUserInfoListCase.getPage()
+                + "&limit="+getUserInfoListCase.getLimit()
+                + "&userName="+getUserInfoListCase.getUserName());
+        new DefaultHttpClient().setCookieStore(TestUrlConfig.store);
 
-        post.setHeader("content-Type","application/json");
-
-        StringEntity entity = new StringEntity(param.toString(),"utf-8");
-        post.setEntity(entity);
-
-        TestUrlConfig.defaultHttpClient.setCookieStore(TestUrlConfig.store);
-
-        HttpResponse response = TestUrlConfig.defaultHttpClient.execute(post);
-        result = EntityUtils.toString(response.getEntity(),"utf-8");
-        // 从一个源JSON文本构造一个JSONArray
-        JSONArray jsonArray = new JSONArray(result);
-        System.out.println(result); // 打印响应结果
-        return jsonArray;
+        //执行请求
+        CloseableHttpResponse response = TestUrlConfig.httpClient.execute(get);
+        try {
+            HttpEntity httpEntity = response.getEntity();
+            // 获取响应实体信息
+            result = EntityUtils.toString(httpEntity,"utf-8");
+            EntityUtils.consume(httpEntity);
+        } finally {
+            response.close();
+        }
+        return result;
     }
 }

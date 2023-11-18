@@ -18,7 +18,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">用户ID</label>
 				<div class="layui-input-block">
-					<input type="text" name="userId" readonly="readonly" style="background:#CCCCCC" id="userId" lay-verify="userId"
+					<input type="text" name="id" readonly="readonly" style="background:#CCCCCC" id="userId" lay-verify="userId"
 						autocomplete="off" placeholder="请输入用户ID" class="layui-input">
 				</div>
 			</div>
@@ -42,7 +42,7 @@
 			<div class="layui-form-item">
 				<label class="layui-form-label">性别</label>
 				<div class="layui-input-block">
-					<select name="userSex" lay-verify="required"  class="userSex">
+					<select name="sex" lay-verify="required"  class="userSex">
 						<option value="">请选择用户性别</option>
 						<option value="男">男</option>
 						<option value="女">女</option>
@@ -86,20 +86,23 @@
 		});
 
 		form.on('submit(editUser)', function(data){
-			var str=JSON.stringify(data.field)
-			console.log(data.field);
+			var data = data.field;
+			var str=JSON.stringify(data);
+			console.log(str);
 			var param = JSON.parse(str);
-			//console.log(param.userId);
+			console.log(data.userSex);
 			$.ajax({
 				type: "POST",//方法类型
 				dataType: "json",//预期服务器返回的数据类型
+				contentType: "application/json",
 				url: "/v1/updateUserInfo",//url
-				data: {
-					id:param.userId,
-					userName:param.userName,
-					age:param.age,
-					sex:param.userSex
-				},
+				data: str,
+				//data: {
+					//id:param.userId,
+					//userName:param.userName,
+					//age:param.age,
+					//sex:param.userSex
+				//},
 				success: function (result) {
 					if (result.code == "0") {
 						var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
