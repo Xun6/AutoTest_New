@@ -32,7 +32,6 @@ public class LoginTest {
         //测试接口地址映射
         TestUrlConfig.addSuerUrl = BundleUrlConfig.getUrl(InterfaceName.ADDUSER);
         TestUrlConfig.loginUrl = BundleUrlConfig.getUrl(InterfaceName.LOGIN);
-//        TestUrlConfig.logoutUrl = BundleUrlConfig.getUrl(InterfaceName.LOGOUT);
         TestUrlConfig.getUserListUrl = BundleUrlConfig.getUrl(InterfaceName.GETUSERLIST);
         TestUrlConfig.updateUserInfoUrl = BundleUrlConfig.getUrl(InterfaceName.UPDATEUSERINFO);
         TestUrlConfig.deleteUserUrl = BundleUrlConfig.getUrl(InterfaceName.DELETEUSER);
@@ -81,7 +80,6 @@ public class LoginTest {
     private String getResult(LoginCase loginCase) throws IOException {
         String result;
         HttpPost post = new HttpPost(TestUrlConfig.loginUrl);  // 创建post请求
-
         //添加键值对存储到JSONObject对象，以json格式包装参数
         List<NameValuePair> ls = new ArrayList<>();
         ls.add(new BasicNameValuePair("userName", loginCase.getUserName()));
@@ -108,9 +106,6 @@ public class LoginTest {
         } finally {
             response.close();
         }
-
-        // 获取响应实体信息
-//        result = EntityUtils.toString(response.getEntity(),"utf-8");
         // 获取请求返回的cookies信息
         TestUrlConfig.store = new DefaultHttpClient().getCookieStore();
         return "fail";
