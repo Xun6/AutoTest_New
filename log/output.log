@@ -3665,3 +3665,56 @@ java.sql.SQLSyntaxErrorException: You have an error in your SQL syntax; check th
 02:45:05.083 [http-nio-8888-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
 02:45:05.085 [http-nio-8888-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
 02:45:05.090 [http-nio-8888-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 5 ms
+03:02:17.665 [main] INFO  c.T.ApplicationMain - Starting ApplicationMain using Java 1.8.0_361 on xiaoyudeMac-mini.local with PID 43025 (/Users/xiaoyu/Desktop/AutoTest_New/Practice8_InterfaceDevelop/target/classes started by xiaoyu in /Users/xiaoyu/Desktop/AutoTest_New)
+03:02:17.667 [main] INFO  c.T.ApplicationMain - No active profile set, falling back to default profiles: default
+03:02:19.855 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port(s): 8888 (http)
+03:02:19.865 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8888"]
+03:02:19.866 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+03:02:19.866 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/9.0.54]
+03:02:19.964 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+03:02:19.964 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 2192 ms
+03:02:21.577 [main] INFO  s.d.s.w.PropertySourcedRequestMappingHandlerMapping - Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+03:02:21.810 [main] INFO  o.s.b.a.w.s.WelcomePageHandlerMapping - Adding welcome page: class path resource [static/index.html]
+03:02:22.073 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8888"]
+03:02:22.098 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port(s): 8888 (http) with context path ''
+03:02:22.100 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - Context refreshed
+03:02:22.112 [main] INFO  s.d.s.w.p.DocumentationPluginsBootstrapper - Found 1 custom documentation plugin(s)
+03:02:22.132 [main] INFO  s.d.s.w.s.ApiListingReferenceScanner - Scanning for api listing references
+03:02:22.464 [main] INFO  c.T.ApplicationMain - Started ApplicationMain in 5.326 seconds (JVM running for 5.996)
+03:02:31.583 [http-nio-8888-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+03:02:31.585 [http-nio-8888-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+03:02:31.594 [http-nio-8888-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 9 ms
+03:02:37.514 [http-nio-8888-exec-2] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+03:02:38.234 [http-nio-8888-exec-2] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+03:02:38.360 [http-nio-8888-exec-2] INFO  c.T.Control.UserController - 登录结果是：1， 登录成功！
+03:02:38.509 [http-nio-8888-exec-3] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/index.html
+03:02:38.548 [http-nio-8888-exec-5] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/js/common.js
+03:02:38.545 [http-nio-8888-exec-6] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/js/main.js
+03:02:38.552 [http-nio-8888-exec-7] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/user-demo.html
+03:02:38.571 [http-nio-8888-exec-8] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/js/module/dialog.js
+03:02:38.629 [http-nio-8888-exec-10] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/v1/getAllUser
+03:02:38.666 [http-nio-8888-exec-10] INFO  c.T.Control.UserController - cookies验证通过
+03:02:38.696 [http-nio-8888-exec-1] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/favicon.ico
+03:02:38.732 [http-nio-8888-exec-1] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/error
+03:02:41.332 [http-nio-8888-exec-4] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/userDetail.html
+03:02:44.341 [http-nio-8888-exec-7] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/v1/getAllUser
+03:02:44.356 [http-nio-8888-exec-7] INFO  c.T.Control.UserController - cookies验证通过
+03:02:44.755 [http-nio-8888-exec-8] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/v1/getAllUser
+03:02:44.757 [http-nio-8888-exec-8] INFO  c.T.Control.UserController - cookies验证通过
+03:02:44.920 [http-nio-8888-exec-9] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/v1/getAllUser
+03:02:44.930 [http-nio-8888-exec-9] INFO  c.T.Control.UserController - cookies验证通过
+03:02:45.061 [http-nio-8888-exec-1] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/v1/getAllUser
+03:02:45.063 [http-nio-8888-exec-1] INFO  c.T.Control.UserController - cookies验证通过
+03:02:45.227 [http-nio-8888-exec-5] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/v1/getAllUser
+03:02:45.229 [http-nio-8888-exec-5] INFO  c.T.Control.UserController - cookies验证通过
+03:02:45.372 [http-nio-8888-exec-6] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/v1/getAllUser
+03:02:45.374 [http-nio-8888-exec-6] INFO  c.T.Control.UserController - cookies验证通过
+03:02:45.537 [http-nio-8888-exec-3] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/v1/getAllUser
+03:02:45.544 [http-nio-8888-exec-3] INFO  c.T.Control.UserController - cookies验证通过
+03:02:45.694 [http-nio-8888-exec-2] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/v1/getAllUser
+03:02:45.695 [http-nio-8888-exec-2] INFO  c.T.Control.UserController - cookies验证通过
+03:02:45.829 [http-nio-8888-exec-4] INFO  c.T.u.interceptor.LoginInterceptor - 放行请求：/v1/getAllUser
+03:02:45.834 [http-nio-8888-exec-4] INFO  c.T.Control.UserController - cookies验证通过
+03:02:46.542 [http-nio-8888-exec-7] INFO  c.T.Control.UserController - cookies验证通过
+03:02:50.704 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+03:02:50.736 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.

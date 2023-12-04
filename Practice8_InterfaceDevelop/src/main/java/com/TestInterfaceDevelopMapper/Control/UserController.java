@@ -50,7 +50,7 @@ public class UserController {
                 return ResultObject.fail("登陆失败，用户名或密码错误!");
             }
         }
-        //登陆失败
+        //密码不合规，登陆失败
         log.info("登录失败！"+"查询结果为：" + i);
         return ResultObject.fail("用户名或密码错误！");
     }
