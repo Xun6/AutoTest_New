@@ -46,7 +46,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.5.13</version>
+            <version>4.5.14</version>
         </dependency>
 <!--        请求数据格式需要-->
         <dependency>
@@ -64,6 +64,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.33</version>
         </dependency>
 <!--        添加lombok依赖（自动生成getter、setter、equals、hashCode和toString，等等!）-->
         <dependency>
