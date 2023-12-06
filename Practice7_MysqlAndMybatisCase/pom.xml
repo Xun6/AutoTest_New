@@ -64,7 +64,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.30</version>
+<!--            <version>8.0.30</version>-->
         </dependency>
 <!--        添加lombok依赖（自动生成getter、setter、equals、hashCode和toString，等等!）-->
         <dependency>
