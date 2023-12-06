@@ -1,39 +1,39 @@
 pipeline{
     	agent{
-		docker{
-			image 'maven:3.6.1-alpine'
-			args '-v /Users/Shared:/root/.m2'
-		}
+            docker{
+                image 'maven:3.6.1-alpine'
+                args '-v /Users/Shared:/root/.m2'
+            }
     	}
 	stages{
 		stage('Build'){
 			steps{
 				sh '''
-                    		  source /etc/profile
-				  pwd
-				  pid=$(ps x | grep "Practice8_InterfaceDevelop-1.0-SNAPSHOT.jar" | grep -v grep | awk '{print $1}')
-				
-				  if [ -n "$pid" ]; then
-				  kill -9 $pid
-				  fi
-				
-				  cd Practice8_InterfaceDevelop
-				  pwd
-				  mvn clean package
-				  cd target
-				  BUILD_ID=dontKillMe
-					
-				  nohup java -jar Practice8_InterfaceDevelop-1.0-SNAPSHOT.jar &
-                		'''
+                    source /etc/profile
+                    pwd
+                    pid=$(ps x | grep "Practice8_InterfaceDevelop-1.0-SNAPSHOT.jar" | grep -v grep | awk '{print $1}')
+
+                    if [ -n "$pid" ]; then
+                    kill -9 $pid
+                    fi
+
+                    cd Practice8_InterfaceDevelop
+                    pwd
+                    mvn clean package
+                    cd target
+                    BUILD_ID=dontKillMe
+
+                    nohup java -jar Practice8_InterfaceDevelop-1.0-SNAPSHOT.jar &
+                '''
 			}
 		}
 		stage('Test'){
 			steps{
 				sh '''
-				  source /etc/profile
-				  pwd
-				  cd Practice7_MysqlAndMybatisCase
-				  mvn clean package
+                    source /etc/profile
+                    pwd
+                    cd Practice7_MysqlAndMybatisCase
+                    mvn clean package
 				'''
 			}
 		}
