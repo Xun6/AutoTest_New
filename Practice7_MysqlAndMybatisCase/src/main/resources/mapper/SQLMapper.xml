@@ -68,17 +68,6 @@
         id=#{userId} and user_name=#{userName};
     </select>
 
-<!--    &lt;!&ndash;获取用户列表&ndash;&gt;-->
-<!--    <select id="getUserList" parameterType="com.MysqlAndMybatis.models.GetUserListCase" resultType="com.MysqlAndMybatis.models.User">-->
-<!--        &lt;!&ndash; SQL语句 &ndash;&gt;-->
-<!--        select * from user-->
-<!--        <where>-->
-<!--            <if test="userName !=null and userName !=''">-->
-<!--                and user_name like concat('%',#{userName},'%')-->
-<!--            </if>-->
-<!--        </where>-->
-<!--    </select>-->
-
     <!--查询更新用户-->
     <select id="getUpdateUserInfo" parameterType="com.MysqlAndMybatis.models.UpdateUserInfoCase" resultType="com.MysqlAndMybatis.models.User">
         select id,user_name userName,password,sex,age,permission from user

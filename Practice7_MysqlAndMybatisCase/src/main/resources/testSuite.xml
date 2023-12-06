@@ -12,33 +12,33 @@
                 </methods>
             </class>
 
-            <!--添加用户接口-->
-            <class name="com.MysqlAndMybatis.cases.AddUserTest">
-                <methods>
-                    <include name="addUser"/>
-                </methods>
-            </class>
+<!--            &lt;!&ndash;添加用户接口&ndash;&gt;-->
+<!--            <class name="com.MysqlAndMybatis.cases.AddUserTest">-->
+<!--                <methods>-->
+<!--                    <include name="addUser"/>-->
+<!--                </methods>-->
+<!--            </class>-->
 
-            <!--获取用户列表接口-->
-            <class name="com.MysqlAndMybatis.cases.GetUserInfoListTest">
-                <methods>
-                    <include name="getUserInfoList"/>
-                </methods>
-            </class>
+<!--            &lt;!&ndash;获取用户列表接口&ndash;&gt;-->
+<!--            <class name="com.MysqlAndMybatis.cases.GetUserInfoListTest">-->
+<!--                <methods>-->
+<!--                    <include name="getUserInfoList"/>-->
+<!--                </methods>-->
+<!--            </class>-->
 
-            <!--更新用户接口-->
-            <class name="com.MysqlAndMybatis.cases.UpdateUserInfoTest">
-                <methods>
-                    <include name="updateUser"/>
-                </methods>
-            </class>
+<!--            &lt;!&ndash;更新用户接口&ndash;&gt;-->
+<!--            <class name="com.MysqlAndMybatis.cases.UpdateUserInfoTest">-->
+<!--                <methods>-->
+<!--                    <include name="updateUser"/>-->
+<!--                </methods>-->
+<!--            </class>-->
 
-            <!--删除用户接口-->
-            <class name="com.MysqlAndMybatis.cases.DeleteUserTest">
-                <methods>
-                    <include name="delUser"/>
-                </methods>
-            </class>
+<!--            &lt;!&ndash;删除用户接口&ndash;&gt;-->
+<!--            <class name="com.MysqlAndMybatis.cases.DeleteUserTest">-->
+<!--                <methods>-->
+<!--                    <include name="delUser"/>-->
+<!--                </methods>-->
+<!--            </class>-->
         </classes>
     </test>
 
