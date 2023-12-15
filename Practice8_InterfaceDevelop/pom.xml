@@ -90,9 +90,9 @@
         </dependency>
         <!--        添加链接数据库驱动依赖（JDBC Type 4 driver for MySQL）-->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>8.0.28</version>
+            <groupId>com.mysql</groupId>
+            <artifactId>mysql-connector-j</artifactId>
+            <version>8.0.33</version>
         </dependency>
         <!--        添加集成库，链接Spring Boot和MyBatis-->
         <dependency>
