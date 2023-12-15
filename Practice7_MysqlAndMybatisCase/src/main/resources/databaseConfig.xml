@@ -12,7 +12,7 @@
                 <!--                加载数据库驱动-->
                 <property name="driver" value="com.mysql.cj.jdbc.Driver"/>
                 <!--                数据库连接地址  为了解决字符问题加入了 ?characterEncoding=utf8-->
-                <property name="url" value="jdbc:mysql://127.0.0.1:3306/xiaoyu_test?useUnicode=true&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull&amp;useSSL=false&amp;allowMultiQueries=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=Asia/Shanghai"/>
+                <property name="url" value="jdbc:mysql://127.0.0.1:3306/xiaoyu_test?useUnicode=true&amp;useSSL=false&amp;allowLoadLocalInfile=false&amp;autoReconnect=true&amp;failOverReadOnly=false&amp;characterEncoding=utf8&amp;zeroDateTimeBehavior=convertToNull&amp;serverTimezone=GMT%2B8&amp;connectTimeout=1000&amp;socketTimeout=30000"/>
                 <!--                数据库用户-->
                 <property name="username" value="root"/>
                 <!--                数据库密码-->
